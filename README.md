@@ -112,16 +112,17 @@ cd agent-center-gateway && mvn spring-boot:run
 2. `python agent_center/main.py`（智能体中台，注册名 agent-center）
 3. `python agent_center_mcp/main.py`（MCP 工具服务）
 4. `python agent_center_a2a/main.py`（5 个子智能体自动以多进程启动，占用 3601-3605 端口）
-5. EduRAG 检索服务：见 [integrated-qa-system](https://github.com/your-github-username/integrated-qa-system)
+5. EduRAG 检索服务：见 [integrated-qa-system](https://github.com/huizhibuyutabu-cpu/integrated-qa-system)
 6. 网关：`cd agent-center-gateway && mvn spring-boot:run`（/acs 入口，端口 10086）
 
 ## 相关项目
 
 - **EduRAG 企业知识库智能问答系统**（RAG 检索增强能力提供方，三级级联管道 + 混合检索 + BERT 意图分类）：
-  [integrated-qa-system](https://github.com/your-github-username/integrated-qa-system)
+  [integrated-qa-system](https://github.com/huizhibuyutabu-cpu/integrated-qa-system)
 - 业务侧新增的 `tj-aigc` 对话微服务（SSE 流式聊天、会话管理，经 Nacos + Feign 与中台集成）属于公司业务代码，不在本仓库内。
 
 ## 许可证
 
 [MIT](LICENSE)
+
 
