@@ -1,0 +1,22 @@
+server:
+  port: 18099  #服务端口
+  host: 0.0.0.0 #监听所有网络接口
+  logger:
+    #    file: logs/app.log
+    level: DEBUG # 日志级别: CRITICAL, ERROR, WARNING, INFO, DEBUG
+
+nacos:
+  server-addr: 127.0.0.1:8848 # nacos注册中心
+  username: your-nacos-username
+  password: your-nacos-password
+  config:
+    namespace: public
+    group: DEFAULT_GROUP
+  discovery:
+    name: agent-center
+    namespace: your-nacos-namespace
+    ip: 127.0.0.1
+
+rag:
+  k:5
+  m:2

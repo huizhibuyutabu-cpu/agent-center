@@ -1,0 +1,28 @@
+# 不进入本仓库的子目录（私有数据 / 已单独开源 / 公司业务代码）
+tjxt_houduan/
+讲义/
+integrated_qa_system/
+
+# IDE / 构建产物
+.idea/
+.vscode/
+*.iml
+target/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 日志与临时文件
+logs/
+*.log
+*.log.*
+
+# 本地数据文件
+*.sqlite
+*.db
+.cache/
+# pip 引导脚本（体积大且与项目无关）
+get-pip.py

@@ -1,0 +1,43 @@
+server:
+  port: 10086  #端口
+  tomcat:
+    uri-encoding: UTF-8   #服务编码
+spring:
+  profiles:
+    active: local
+  application:
+    name: agent-center-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: acs
+          uri: lb://agent-center # 负载均衡路由到agent-center服务
+          predicates:
+            - Path=/acs/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                rateLimiter: "#{@redisRateLimiter}"   # 使用 Redis 限流器
+                keyResolver: "#{@apiKeyResolver}"      # 按请求路径限流
+                redis-rate-limiter.replenishRate: 10  # 每秒恢复 10 个令牌
+                redis-rate-limiter.burstCapacity: 20  # 桶最大容量 20
+            - name: CircuitBreaker
+              args:
+                name: courseCircuitBreaker   # 熔断器名称
+                fallbackUri: forward:/fallback/ac  # 熔断后的降级地址
+      default-filters:
+        - StripPrefix=1 # 转发请求时去掉/acs前缀
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      courseCircuitBreaker:
+        registerHealthIndicator: true    # 暴露到 actuator
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10            # 统计最近 10 次请求
+        failureRateThreshold: 50         # 失败比例超过 50% 开始熔断
+        minimumNumberOfCalls: 5          # 至少 5 个请求后才统计
+        waitDurationInOpenState: 10s     # 熔断后 10 秒进入半开
+        permittedNumberOfCallsInHalfOpenState: 3 # 半开状态放行 3 个请求
+        automaticTransitionFromOpenToHalfOpenEnabled: true  #启用自动从 OPEN 切换到 HALF_OPEN

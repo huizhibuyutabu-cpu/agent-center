@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848 # nacos注册中心
+      username: your-nacos-username
+      password: your-nacos-password
+      discovery:
+        namespace: your-nacos-namespace
+        group: DEFAULT_GROUP
+        ip: 127.0.0.1
+      config:
+        file-extension: yaml
+  config:
+    import:
+      - nacos:shared-logs.yaml # 共享日志配置
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: your-redis-password
+logging:
+    com.agent: debug
+
+jwt:
+  public-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiCJNC8S4VB3Ic4SfAOtOw2EngIEqz0kuRj3YfLwybISJICvWAcRAXKr+ZJv8ch4KROORbMkEgef316Yf8sMIDbpmE2VFMrd8ovsoL32cr6cKOAs+ic8KeTNnaIhu5Sq8r9DGyLDN0bOSlNATgLDIlVbeS3XjN0km9ZR2kI+c3TQIDAQAB"
+

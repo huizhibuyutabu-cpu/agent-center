@@ -1,0 +1,133 @@
+server:
+  logger:
+    #    file: logs/app.log
+    level: DEBUG # 日志级别: CRITICAL, ERROR, WARNING, INFO, DEBUG
+
+nacos:
+  server-addr: 127.0.0.1:8848 # nacos注册中心
+  username: your-nacos-username
+  password: your-nacos-password
+  config:
+    namespace: public
+    group: DEFAULT_GROUP
+  discovery:
+    name: agent-center
+    namespace: your-nacos-namespace
+    ip: 127.0.0.1
+
+ai:
+  openai:
+    model: qwen3-max
+    api-key: your-dashscope-api-key
+    base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    temperature: 0.8
+    timeout: 30
+
+prompt:
+  recommend:
+    chat:
+      data-id: recommend-agent-system-message.txt
+  buy:
+    chat:
+      data-id: buy-agent-system-message.txt
+  consult:
+    chat:
+      data-id: consult-agent-system-message.txt
+  knowledge:
+    chat:
+      data-id: knowledge-agent-system-message.txt
+  unknown:
+    chat:
+      data-id: unknown-agent-system-message.txt
+
+app:
+  recommend:
+    port: 3601
+    skills:
+      - id: recommend
+        name: 课程推荐
+        description: "通过采集用户的信息，进行课程推荐"
+        tags:
+          - 课程推荐
+          - 课程匹配
+        examples:
+          - "你好，课程推荐"
+          - "本科，对java感兴趣，没有编程基础，帮我推荐课程"
+    card:
+      name: 'RecommendAgent'
+      description: '天机AI课程推荐智能体'
+      host: 127.0.0.1
+      version: '1.0.0'
+  buy:
+    port: 3602
+    skills:
+      - id: buy
+        name: 课程下单购买
+        description: "协助学员购买课程，并提供相关支持。"
+        tags:
+          - 课程购买
+          - 下单购买
+          - 课程匹配
+        examples:
+          - "下单购买"
+          - "下单"
+    card:
+      name: 'BuyAgent'
+      description: '天机AI课程购买智能体'
+      host: 127.0.0.1
+      version: '1.0.0'
+  consult:
+    port: 3603
+    skills:
+      - id: consult
+        name: 课程咨询
+        description: "为学员提供关于课程的咨询服务"
+        tags:
+          - 课程咨询
+          - 信息查询
+        examples:
+          - "查询课程信息，id为：xxxxxxxx"
+    card:
+      name: 'ConsultAgent'
+      description: '天机AI课程咨询智能体'
+      host: 127.0.0.1
+      version: '1.0.0'
+  knowledge:
+    port: 3604
+    skills:
+      - id: knowledge
+        name: 知识讲解
+        description: "解答学员关于IT相关知识点的疑问，并提供详细讲解和示例。"
+        tags:
+          - 知识讲解
+          - IT问题
+        examples:
+          - "Java与Python有什么区别？"
+          - "写一个Java的入门示例"
+    card:
+      name: 'KnowledgeAgent'
+      description: '天机AI知识讲解智能体'
+      host: 127.0.0.1
+      version: '1.0.0'
+  unknown:
+    port: 3605
+    skills:
+      - id: unknown
+        name: 问题回答
+        description: "回答学生提出的问题（没有明确的智能体处理时）"
+        tags:
+          - 问题回答
+        examples:
+          - "你是谁？"
+          - "你能干什么？"
+          - "你喜欢吃什么？"
+    card:
+      name: 'UnknownAgent'
+      description: '天机AI问题回答智能体'
+      host: 127.0.0.1
+      version: '1.0.0'
+
+mcp-servers:
+  - name: agent_center_mcp
+    transport: streamable_http
+    url: http://localhost:18099/mcp
